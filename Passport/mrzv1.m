@@ -1,15 +1,17 @@
 clear all;
-i=imread('passport_07.jpeg');
+i=imread('passport_03.jpg');
 img_gray=rgb2gray(i);
 img=imresize(img_gray,[600,NaN]);
 iBlur=imgaussfilt(img,'FilterSize',3);
 J=im2bw(iBlur,0.5);
 J=imcomplement(J);
+figure, imshow(J);
 %se1=strel('line',1,45);
 %K=imerode(J,se1);
 se = strel('rectangle',[13 13]);
 closeBW = imclose(J,se);
 T= imerode(closeBW,se);
+figure,imshow(T);
 reg=regionprops(T,'BoundingBox');
 x=0;
 y=0;
@@ -28,5 +30,5 @@ boundingBox(1)=boundingBox(1)-padding;
 boundingBox(2)=boundingBox(2)-padding;
 boundingBox(3)=boundingBox(3)+padding*2;
 boundingBox(4)=boundingBox(4)+padding*2;
-chut=imcrop(img,boundingBox);
-imshow(chut)
+mrz=imcrop(img,boundingBox);
+imshow(mrz)
